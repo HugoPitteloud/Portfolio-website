@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Project</title>
+
+<style>
+
+*{box-sizing:border-box;}
+
+body{
+margin:0;
+font-family:Arial;
+background:#f3f3f3;
+}
+
+.page{
+max-width:1400px;
+margin:auto;
+padding:20px;
+}
+
+.back{
+display:inline-block;
+margin-bottom:20px;
+background:#04AA6D;
+color:white;
+padding:10px 16px;
+border-radius:6px;
+text-decoration:none;
+}
+
+.grid{
+display:grid;
+grid-template-columns:2fr 1fr 1fr;
+grid-template-areas:
+"hero intro intro"
+"hero text1 text2"
+"video video side"
+"g1 g2 g3";
+gap:16px;
+}
+
+.card{
+background:white;
+border-radius:10px;
+overflow:hidden;
+}
+
+.card-content{
+padding:18px;
+}
+
+.hero{grid-area:hero;}
+.intro{grid-area:intro;}
+.text1{grid-area:text1;}
+.text2{grid-area:text2;}
+.video{grid-area:video;}
+.side{grid-area:side;}
+.g1{grid-area:g1;}
+.g2{grid-area:g2;}
+.g3{grid-area:g3;}
+
+img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+video{
+width:100%;
+}
+
+@media(max-width:900px){
+
+.grid{
+grid-template-columns:1fr 1fr;
+grid-template-areas:
+"hero hero"
+"intro intro"
+"text1 text2"
+"video video"
+"side side"
+"g1 g2"
+"g3 g3";
+}
+
+}
+
+@media(max-width:600px){
+
+.grid{
+grid-template-columns:1fr;
+grid-template-areas:
+"hero"
+"intro"
+"text1"
+"text2"
+"video"
+"side"
+"g1"
+"g2"
+"g3";
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+<a href="index.html" class="back">← Back</a>
+
+<h1 id="title"></h1>
+
+<div class="grid">
+
+<div class="card hero">
+<img id="hero">
+</div>
+
+<div class="card intro">
+<div class="card-content">
+<h2>Overview</h2>
+<p id="overview"></p>
+</div>
+</div>
+
+<div class="card text1">
+<div class="card-content">
+<h3>Concept</h3>
+<p id="concept"></p>
+</div>
+</div>
+
+<div class="card text2">
+<div class="card-content">
+<h3>Details</h3>
+<p id="details"></p>
+</div>
+</div>
+
+<div class="card video">
+<video controls id="video"></video>
+</div>
+
+<div class="card side">
+<img id="side">
+</div>
+
+<div class="card g1"><img id="g1"></div>
+<div class="card g2"><img id="g2"></div>
+<div class="card g3"><img id="g3"></div>
+
+</div>
+</div>
+
+<script src="data.js"></script>
+
+<script>
+
+const params=new URLSearchParams(window.location.search)
+const id=params.get("id")||0
+const p=projects[id]
+
+document.getElementById("title").textContent=p.title
+
+document.getElementById("hero").src=p.hero
+document.getElementById("side").src=p.side
+
+document.getElementById("g1").src=p.gallery[0]
+document.getElementById("g2").src=p.gallery[1]
+document.getElementById("g3").src=p.gallery[2]
+
+document.getElementById("video").src=p.video
+
+document.getElementById("overview").textContent=p.overview
+document.getElementById("concept").textContent=p.concept
+document.getElementById("details").textContent=p.details
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: monospace;
+  background: oklab(53.52% -0.00633 -0.10981 / 0.475);
+  color: black;
+}
+
+.header {
+  position: relative;
+  text-align: center;
+  padding: 25px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 42px;
+}
+.main-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.main-media img,
+.main-media video {
+  width: 100%;
+  max-height: 60vh;
+  object-fit: contain;
+  display: block;
+}
+.close-button {
+  position: absolute;
+  right: 35px;
+  top: 25px;
+  font-size: 40px;
+  text-decoration: none;
+  color: black;
+}
+
+.project-text {
+  max-width: 900px;
+  margin: 0 auto 30px auto;
+  padding: 0 25px;
+  font-size: 18px;
+  line-height: 1.5;
+  text-align: center;
+}
+.viewer {
+  position: relative;
+  width: 100vw;
+  min-height: 75vh;
+  padding: 25px 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center-block {
+  width: 60vw;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.main-media {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-media img,
+.main-media video {
+  width: 100%;
+  max-height: 60vh;
+  object-fit: contain;
+  display: block;
+}
+
+.image-text {
+  max-width: 100%;
+  margin-top: 20px;
+  font-size: 18px;
+  line-height: 1.5;
+  white-space: pre-line;
+  text-align: center;
+}
+
+.side-media {
+  position: absolute;
+  width: 13vw;
+  max-height: 45vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.side-media img,
+.side-media video {
+  width: 100%;
+  max-height: 45vh;
+  object-fit: contain;
+  opacity: 0.35;
+  filter: grayscale(100%);
+  pointer-events: none;
+}
+
+#leftMedia {
+  left: calc(50vw - 30vw - 13vw - 25px);
+}
+
+#rightMedia {
+  right: calc(50vw - 30vw - 13vw - 25px);
+}
+
+.arrow {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 70px;
+  cursor: pointer;
+  user-select: none;
+  z-index: 10;
+}
+
+#prev {
+  left: 30px;
+}
+
+#next {
+  right: 30px;
+}
+
+@media (max-width: 900px) {
+  .center-block {
+    width: 75vw;
+  }
+
+  .side-media {
+    display: none;
+  }
+
+  .viewer {
+    padding: 25px 60px;
+  }
+}
+
+
+
+
+.main-wrapper.inspected {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  background: rgba(0,0,0,0.92);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-wrapper.inspected .main-media img {
+  max-width: 95vw;
+  max-height: 95vh;
+  width: auto;
+  height: auto;
+  transform: scale(var(--zoom, 1));
+  cursor: zoom-out;
+}
+
+.main-media img {
+  cursor: zoom-in;
+}
+
+.main-media video {
+  cursor: default;
+}
+
+.main-wrapper.inspected .main-media img {
+  cursor: zoom-out;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h1 id="projectTitle"></h1>
+  <a class="close-button" href="index.html">×</a>
+</div>
+
+<div class="project-text" id="projectText"></div>
+
+<div class="viewer">
+  <div class="arrow" id="prev">‹</div>
+
+  <div id="leftMedia" class="side-media"></div>
+
+  <div class="center-block">
+  <div class="main-wrapper">
+    <div id="mainMedia" class="main-media"></div>
+  
+  </div>
+  <p id="imageText" class="image-text"></p>
+</div>
+
+  <div id="rightMedia" class="side-media"></div>
+
+  <div class="arrow" id="next">›</div>
+</div>
+
+
+
+<script src="data.js"></script>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const id = Number(params.get("id"));
+const project = projects[id];
+
+const title = document.getElementById("projectTitle");
+const text = document.getElementById("projectText");
+
+const mainWrapper = document.querySelector(".main-wrapper");
+
+
+const mainMedia = document.getElementById("mainMedia");
+const leftMedia = document.getElementById("leftMedia");
+const rightMedia = document.getElementById("rightMedia");
+const imageText = document.getElementById("imageText");
+
+let currentIndex = 0;
+let zoom = 1;
+let inspected = false;
+
+const media = project.media || [];
+
+title.textContent = project.title;
+text.textContent = project.text || "";
+
+function loopIndex(index) {
+  return (index + media.length) % media.length;
+}
+
+function createMedia(item, isMain = false) {
+  if (item.type === "video") {
+    const video = document.createElement("video");
+    video.src = item.src;
+    video.controls = isMain;
+    video.playsInline = true;
+    video.preload = "metadata";
+    return video;
+  }
+
+  const img = document.createElement("img");
+  img.src = item.src;
+  img.alt = project.title;
+  return img;
+}
+
+function renderSlot(container, index, isMain = false) {
+  container.innerHTML = "";
+
+  if (media.length === 0) return;
+
+  const item = media[index];
+  const element = createMedia(item, isMain);
+
+  container.appendChild(element);
+}
+
+function updateGallery() {
+  if (media.length === 0) return;
+
+  inspected = false;
+  zoom = 1;
+  mainWrapper.classList.remove("inspected");
+  mainWrapper.style.setProperty("--zoom", zoom);
+
+  const leftIndex = loopIndex(currentIndex - 1);
+  const rightIndex = loopIndex(currentIndex + 1);
+
+  renderSlot(mainMedia, currentIndex, true);
+  renderSlot(leftMedia, leftIndex, false);
+  renderSlot(rightMedia, rightIndex, false);
+
+  imageText.textContent = media[currentIndex].text || "";
+}
+
+function toggleInspect() {
+  const currentItem = media[currentIndex];
+
+  if (!currentItem || currentItem.type !== "image") return;
+
+  inspected = !inspected;
+  zoom = 1;
+
+  mainWrapper.style.setProperty("--zoom", zoom);
+  mainWrapper.classList.toggle("inspected", inspected);
+}
+
+
+mainMedia.addEventListener("click", () => {
+  const currentItem = media[currentIndex];
+
+  if (!currentItem || currentItem.type !== "image") return;
+
+  toggleInspect();
+});
+
+mainWrapper.addEventListener("wheel", (event) => {
+  if (!inspected) return;
+
+  event.preventDefault();
+
+  zoom += event.deltaY < 0 ? 0.1 : -0.1;
+  zoom = Math.min(Math.max(zoom, 1), 1.5);
+
+  mainWrapper.style.setProperty("--zoom", zoom);
+});
+
+document.getElementById("next").addEventListener("click", () => {
+  currentIndex = loopIndex(currentIndex + 1);
+  updateGallery();
+});
+
+document.getElementById("prev").addEventListener("click", () => {
+  currentIndex = loopIndex(currentIndex - 1);
+  updateGallery();
+});
+
+rightMedia.addEventListener("click", () => {
+  currentIndex = loopIndex(currentIndex + 1);
+  updateGallery();
+});
+
+leftMedia.addEventListener("click", () => {
+  currentIndex = loopIndex(currentIndex - 1);
+  updateGallery();
+});
+
+updateGallery();
+</script>
+
+</body>
+</html>

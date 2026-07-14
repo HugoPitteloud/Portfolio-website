@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio</title>
+
+<style>
+* { box-sizing: border-box; }
+body {
+  
+  text-align: justify;
+  letter-spacing: 3px;
+  
+  margin: 0;
+  min-height: 100vh;
+  font-family:monospace; 
+  font-size: 25px;
+  background: oklab(53.52% -0.00633 -0.10981 / 0.475);
+}
+p {
+  font-family:monospace; /* use font */
+}
+q {
+  /*text-indent: 50px;*/
+  text-align: justify;
+  letter-spacing: 3px;
+  font-size: 18px;
+  font-family:monospace; /* use font */
+  
+}
+.header {
+  letter-spacing: 3px;
+  font-family:monospace;
+  text-align: center;
+  padding: 50px;
+
+}
+
+.gallery {
+  column-count: 6;
+  column-gap: 25px;
+  padding: 25px;
+}
+
+.gallery a {
+  display: block;
+  break-inside: avoid;
+  margin-bottom: 25px;
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 3px;
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  transition: 0.4s;
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 3px;
+}
+
+.card img {
+  width: 100%;
+  object-fit: cover;
+  display: block;
+  transition: 0.4s;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,.4);
+  opacity: 0;
+  transition: .3s;
+}
+
+.overlay span {
+  background: #000000;
+  color: rgb(255, 255, 255);
+  padding: 20px 36px;
+  border-radius: 3px;
+}
+
+.card:hover img {
+  transform: scale(1.05);
+  opacity: .8;
+}
+
+.card:hover .overlay {
+  opacity: 1;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+@media (max-width: 1100px) {
+  .gallery { column-count: 4; }
+}
+
+@media (max-width: 800px) {
+  .gallery { column-count: 2; }
+}
+
+@media (max-width: 500px) {
+  .gallery { column-count: 1; }
+}
+.footer {
+  text-align: center;
+  padding: 60px 25px;
+  margin-top: 100px;
+}
+
+.footer h3 {
+  margin-bottom: 20px;
+}
+
+.footer a {
+  color: inherit;
+  text-decoration: underline;
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Hugo Pitteloud</h1>
+  <p>Game Designer / Concept Artist / Illustrator</p>
+  <q>Hello! I am currently a Game Design student at ZHdK. Open for commisions, I can illustrate, paint, do concept arts, background paintings and more. Here is an arranged and chaotic collection of works and projects I did. Some traditional paintings are also for sale. Feel free to contact me! >:D</q>
+</div>
+
+<div class="gallery" id="gallery"></div>
+
+<script src="data.js"></script>
+
+<script>
+const gallery = document.getElementById("gallery");
+
+// create shuffled copy
+const shuffledProjects = [...projects].sort(() => Math.random() - 0.5);
+
+shuffledProjects.forEach((project) => {
+
+  // keep original project id if needed
+  const originalIndex = projects.indexOf(project);
+
+  const link = document.createElement("a");
+  link.href = "detail.html?id=" + originalIndex;
+
+  link.innerHTML = `
+    <div class="card">
+      <img src="${project.cover}" alt="${project.title}">
+      <div class="overlay">
+        <span>${project.title}</span>
+      </div>
+    </div>
+  `;
+
+  gallery.appendChild(link);
+});
+</script>
+<footer class="footer">
+  <p>© Hugo Pitteloud. All rights reserved.</p>
+  <h3>Contact</h3>
+  <p>
+    <a href="mailto:pitteloudhugo@gmail.com">
+      pitteloudhugo@gmail.com
+    </a>
+  </p>
+  <h3>Links</h3>
+  <p>
+    <a href="https://www.instagram.com/hugopitteloud/" target="_blank">
+      Instagram
+    </a>
+    •
+    <a href="https://hugo-pitteloud.itch.io/" target="_blank">
+      itch.io
+    </a>
+  </p>
+  <h3>Locations</h3>
+  <p>
+    Zurich / Valais, Switzerland
+  </p>
+</footer>
+</body>
+</html>
