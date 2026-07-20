@@ -1,7 +1,7 @@
 const projects = [
   {
     "title": "Comic Spectrum",
-    "text": "",
+    "text": "Spectrum takes place in a city in the desert with very high walls and buildings often very close to each other which makes it hard for any light beam to reach the ground. The people living in this city are very religious and are working almost all day long for the good and sake of the religious imperialism leading the world and their lifes.",
     "cover": "./projects/Comic Spectrum/cover.png",
     "media": [
       {
@@ -198,6 +198,11 @@ const projects = [
       },
       {
         "type": "image",
+        "src": "./projects/Concept Art/Digital Illustration Final work3.png",
+        "text": ""
+      },
+      {
+        "type": "image",
         "src": "./projects/Concept Art/Sans titre-1.png",
         "text": ""
       },
@@ -301,11 +306,6 @@ const projects = [
       {
         "type": "image",
         "src": "./projects/CrypticLapse/what.png",
-        "text": ""
-      },
-      {
-        "type": "video",
-        "src": "./projects/CrypticLapse/CrypticLapseTrailer.mp4",
         "text": ""
       }
     ]
@@ -472,6 +472,12 @@ const projects = [
     ]
   },
   {
+    "title": "DownTheMine",
+    "text": "",
+    "cover": "",
+    "media": []
+  },
+  {
     "title": "forgebulle",
     "text": "",
     "cover": "./projects/ForgeBulle/1.png",
@@ -500,11 +506,6 @@ const projects = [
         "type": "image",
         "src": "./projects/ForgeBulle/Capture d'écran 2025-10-20 103034.png",
         "text": ""
-      },
-      {
-        "type": "video",
-        "src": "./projects/ForgeBulle/VideoAnimationBuild.mp4",
-        "text": ""
       }
     ]
   },
@@ -521,11 +522,6 @@ const projects = [
       {
         "type": "image",
         "src": "./projects/freefish/Screenshot 2.png",
-        "text": ""
-      },
-      {
-        "type": "video",
-        "src": "./projects/freefish/Gameplay Video.mp4",
         "text": ""
       }
     ]
