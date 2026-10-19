@@ -471,11 +471,62 @@ const projects = [
       }
     ]
   },
-  {
+    {
     "title": "DownTheMine",
     "text": "",
-    "cover": "",
-    "media": []
+    "cover": "./projects/DownTheMine/Image Sequence_001_0000.jpg",
+    "media": [
+      {
+        "type": "image",
+        "src": "./projects/DownTheMine/Image Sequence_001_0000.jpg",
+        "text": ""
+      },
+      {
+        "type": "image",
+        "src": "./projects/DownTheMine/Image Sequence_001_0080.jpg",
+        "text": ""
+      },
+      {
+        "type": "image",
+        "src": "./projects/DownTheMine/Image Sequence_001_0141.jpg",
+        "text": ""
+      },
+      {
+        "type": "image",
+        "src": "./projects/DownTheMine/Image Sequence_001_0275.jpg",
+        "text": ""
+      },
+      {
+        "type": "image",
+        "src": "./projects/DownTheMine/Image Sequence_001_0454.jpg",
+        "text": ""
+      },
+      {
+        "type": "image",
+        "src": "./projects/DownTheMine/Image Sequence_001_0621.jpg",
+        "text": ""
+      },
+      {
+        "type": "image",
+        "src": "./projects/DownTheMine/Image Sequence_001_1007.jpg",
+        "text": ""
+      },
+      {
+        "type": "image",
+        "src": "./projects/DownTheMine/Image Sequence_001_1170.jpg",
+        "text": ""
+      },
+      {
+        "type": "image",
+        "src": "./projects/DownTheMine/Image Sequence_001_1277.jpg",
+        "text": ""
+      },
+      {
+        "type": "image",
+        "src": "./projects/DownTheMine/Image Sequence_001_2220.jpg",
+        "text": ""
+      }
+    ]
   },
   {
     "title": "forgebulle",
