@@ -471,7 +471,7 @@ const projects = [
       }
     ]
   },
-    {
+  {
     "title": "DownTheMine",
     "text": "",
     "cover": "./projects/DownTheMine/Image Sequence_001_0000.jpg",
